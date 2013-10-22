@@ -15,7 +15,7 @@ at the same time, have more users.
 
 Our engine should accept HTTP Requests with the next POST parameters:
 
-* Application_ID ( 32 characters ) :
+* application_id ( 32 characters ) :
  Our system will accept payments from different apps, so we need to keep track of this.
 
 * order_id ( 32 characters ) :
