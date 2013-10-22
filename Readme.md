@@ -61,3 +61,30 @@ PSE V3:
 The security key is a hybrid encryption algorithm ( GPG , http://en.wikipedia.org/wiki/GNU_Privacy_Guard ) . However,
 this version has still not been released . It is optional for those who finish quickly the exercise, to implement
 this PSE version.
+
+
+---
+
+In order to optimize bank fees, our engine will connect to a different payment backend depending on the credit card type:
+
+* VISA : We use Entity A
+
+* MASTERCARD : We use Entity B
+
+* AMEX : We use Entity C
+
+
+Entity A Expects a XML Request with the next format:
+```
+<xml>
+<merchant_id></merchant_id>
+<merchant_transaction_id></merchant_transaction_id>
+<cc_beholder></cc_beholder>
+<cc_number></cc_number>
+<cc_expiry_month></cc_expiry_month>
+<cc_expiry_year></cc_expiry_year>
+<cc_cvv></cc_cvv>
+<charge_amount></charge_amount>
+<charge_currency></charge_currency>
+</xml>
+```
