@@ -25,9 +25,9 @@ Class BootstrapTest extends \PHPUnit_Framework_TestCase
             "api_version"       => 1
         );
 
-        $bs = new Bootstrap($requestParams);
+        $bs = new Bootstrap();
 
-        $response = $bs->run();
+        $response = $bs->run($requestParams);
 
         $xmlResponseObject = simplexml_load_string($response);
         $successElement = $xmlResponseObject->success;
