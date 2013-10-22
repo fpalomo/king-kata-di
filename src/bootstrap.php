@@ -24,6 +24,9 @@ class Bootstrap
             // create cc object
             $ccData = new CreditCard($params);
 
+            // create security check object
+            $securityCheck = new SecurityCheck($params);
+
             $engine = new PaymentEngine();
             $engine->setBankEntity($bankEntity);
             $engine->setRemoteApp($remoteApp);
