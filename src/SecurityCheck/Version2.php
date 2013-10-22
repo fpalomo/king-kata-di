@@ -4,8 +4,30 @@ class SecurityCheck_Version2
 {
     public function validate($params)
     {
-        //TODO
-        return true;
+
+        $requiredParams = array(
+            "application_id",
+            "order_id",
+            "cc_type",
+            "cc_beholder",
+            "cc_number",
+            "cc_expiry_month",
+            "cc_expiry_year",
+            "cc_cvv",
+            "charge_amount",
+        );
+
+        $concatenatedResult = "";
+        foreach ($requiredParams as $key) {
+            if (!isset($params[$key])) {
+                throw new exception ("Missing param $key");
+            }
+            $concatenatedResult .= $params[$key];
+
+        }
+        $hashConcatenatedResult = md5($concatenatedResult);
+
+        return $hashConcatenatedResult == $params["security_key"];
     }
 
 
