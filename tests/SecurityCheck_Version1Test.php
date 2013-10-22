@@ -12,11 +12,22 @@ Class SecurityCheck_Version1Test extends \PHPUnit_Framework_TestCase
     {
 
         $securityCheck = new SecurityCheck_Version1();
-        $params = array(
-
+        $requestParams = array(
+            "application_id" => 1,
+            "order_id" => 2,
+            "cc_type" => "VISA",
+            "cc_beholder" => "bruce waine",
+            "cc_number" => "1234123412341234",
+            "cc_expiry_month" => "12",
+            "cc_expiry_year" => "17",
+            "cc_cvv" => "123",
+            "charge_amount" => 124.50,
+            "charge_currency" => "EUR",
+            "security_key" => "12Vb11111",
+            "api_version" => 1
         );
 
-        $valid = $securityCheck->validate($params);
+        $valid = $securityCheck->validate($requestParams);
 
         $this->assertTrue($valid);
 
@@ -24,6 +35,30 @@ Class SecurityCheck_Version1Test extends \PHPUnit_Framework_TestCase
 
     public function testFailValidate()
     {
+        $securityCheck = new SecurityCheck_Version1();
+        $requestParams = array(
+            "application_id" => 1,
+            "order_id" => 2,
+            "cc_type" => "VISA",
+            "cc_beholder" => "bruce waine",
+            "cc_number" => "1234123412341234",
+            "cc_expiry_month" => "12",
+            "cc_expiry_year" => "17",
+            "cc_cvv" => "123",
+            "charge_amount" => 124.50,
+            "charge_currency" => "EUR",
+            "security_key" => "12XXXXXVbX",
+            "api_version" => 1
+        );
 
+        $valid = $securityCheck->validate($requestParams);
+
+        $this->assertFalse($valid);
+    }
+
+
+    public function testMissingRequiredParam()
+    {
+        //TODO
     }
 }
