@@ -1,7 +1,16 @@
 <?php
 
-class SecurityCheck_Version1
+require_once "Abstract.php";
+
+class SecurityCheck_Version1 extends SecurityCheck_Abstract
 {
+    protected $params;
+
+    public function setParams($params)
+    {
+        $this->params = $params;
+    }
+
     public function validate($params)
     {
 
@@ -19,10 +28,15 @@ class SecurityCheck_Version1
 
         $concatenatedResult = "";
         foreach ($requiredParams as $key) {
-            if (!isset($params[$key])) {
-                throw new exception ("Missing param $key");
+            if (!empty($this->params[$key])) {
+                $value = $this->params[$key];
+            } else {
+                if (!isset($params[$key])) {
+                    throw new exception ("Missing param $key");
+                }
+                $value = $params[$key];
             }
-            $concatenatedResult .= substr($params[$key], 0, 1);
+            $concatenatedResult .= substr($value, 0, 1);
 
         }
 
