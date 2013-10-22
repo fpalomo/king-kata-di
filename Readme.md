@@ -17,7 +17,7 @@ Our engine should accept HTTP Requests with the next POST parameters:
  Our system will accept payments from different apps, so we need to keep track of this.
 
 * Order ID ( 32 characters ) :
- App order ID , to be able to trace the payment back.
+ App order ID , to be able to trace the payment back, and for the IPN ( read below ).
 
 * CC type ( 16 characters ) :
  One of ( VISA | MASTERCARD | AMEX )
@@ -39,6 +39,9 @@ Our engine should accept HTTP Requests with the next POST parameters:
 
 * Transaction request security key ( 32 characters ) :
  The requests include a code to ensure they are real transaction requests.
+
+* ipn_endpoint : optional, URL where our system will notify of the payment success before printing the output. Explained
+below.
 
 
 Our engine will response a simple XML with the next format:
@@ -77,6 +80,19 @@ PSE V3:
 The security key is a hybrid encryption algorithm ( GPG , http://en.wikipedia.org/wiki/GNU_Privacy_Guard ) . However,
 this version has still not been released . It is an improvement to add for those who finish the exercise earlier.
 this PSE version.
+
+
+In order to limit the systems that we need to audit to obtain our PCI Compliance certification ( http://www.pcicomplianceguide.org/ )
+We have designed a system that allows our apps to generate the orders, and have their users connecting directly to our servers.
+In case the app uses it, we need to have an Instant Payment Notification ( IPN ) end point. If the request includes this ipn, we should
+connect to it and send the next parameters in a POST request:
+
+- order_id : The same coming in the request
+- transaction_id : PSP Gateway internal transaction id
+- success : [0-1]
+- error_message : In case of success 0
+
+If the request includes IPN endpoint, we should ensure we can connect to it before executing the payment.
 
 
 ---
@@ -164,3 +180,8 @@ Entity C responses :
 ```
 Where
 - response_code : 0 in case of success . 1-255 in case of error, being this value the error code.
+
+
+---
+
+Find a system diagram here ![alt tag](https://raw.github.com/fpalomo/king-kata-di/blob/master/img/King%20Coding%20Dojo%20-%20Exercise%203%20-%20PSP%20Gateway.png)
