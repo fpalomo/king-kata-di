@@ -6,8 +6,10 @@ Definition
 ==========
 
 
-We are going to develop a very basic and simplistic version of a micro payment service provider gateway, PSP Gateway.
+We are going to develop a very basic and simplistic version of a micro payment service provider gateway, a PSP Gateway.
 For educative purposes we will keep this simple, although there are more standard ways of transferring parameters.
+You can think of it as the central payment service for all the king games, having several games using it. Those games,
+at the same time, have more users.
 
 ---
 
