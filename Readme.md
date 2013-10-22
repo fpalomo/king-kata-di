@@ -47,12 +47,14 @@ newer apps use one of the newer algorithms, v2 or v3 .
 
 PSE v1:
 The security key is just the first character of the next values concatenated in the this order:
- Application ID + Order ID + CC Type + CC Beholder + CC Number + CC Expiry Month + CC Expiry year + CC CVV + Charge Amount + Day of the Month using 2 characters
+
+* Application ID + Order ID + CC Type + CC Beholder + CC Number + CC Expiry Month + CC Expiry year + CC CVV + Charge Amount + Day of the Month using 2 characters
 
 
 PSE v2:
 The security key is a one way authentication algorithm ( md5 ) , using the next values concatenated in this order:
- Application ID + Order ID + CC Type + CC Beholder + CC Number + CC Expiry Month + CC Expiry year + CC CVV + Charge Amount + Current Month Day using 2 characters
+
+* Application ID + Order ID + CC Type + CC Beholder + CC Number + CC Expiry Month + CC Expiry year + CC CVV + Charge Amount + Current Month Day using 2 characters
 
 
 PSE V3:
