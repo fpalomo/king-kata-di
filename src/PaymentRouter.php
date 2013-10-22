@@ -1,8 +1,8 @@
 <?php
 
-require "BankEntityDriver/A.php";
-require "BankEntityDriver/B.php";
-require "BankEntityDriver/C.php";
+require_once "BankEntityDriver/A.php";
+require_once "BankEntityDriver/B.php";
+require_once "BankEntityDriver/C.php";
 
 
 Class PaymentRouter

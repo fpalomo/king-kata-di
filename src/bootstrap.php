@@ -1,8 +1,8 @@
 <?php
 
-include "RemoteApp.php";
-include "PaymentEngine.php";
-include "PaymentRouter.php";
+require_once "RemoteApp.php";
+require_once "PaymentEngine.php";
+require_once "PaymentRouter.php";
 
 
 

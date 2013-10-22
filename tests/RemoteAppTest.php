@@ -1,8 +1,8 @@
 <?php
 
-require '../vendor/phpunit/phpunit/PHPUnit/Autoload.php';
+require_once '../vendor/phpunit/phpunit/PHPUnit/Autoload.php';
 
-include "../src/RemoteApp.php";
+require_once "../src/RemoteApp.php";
 
 Class RemoteAppTest extends \PHPUnit_Framework_TestCase
 {

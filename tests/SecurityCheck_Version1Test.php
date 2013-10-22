@@ -2,9 +2,9 @@
 
 
 
-require '../vendor/phpunit/phpunit/PHPUnit/Autoload.php';
+require_once '../vendor/phpunit/phpunit/PHPUnit/Autoload.php';
 
-include "../src/SecurityCheck/Version1.php";
+require_once "../src/SecurityCheck/Version1.php";
 
 Class SecurityCheck_Version1Test extends \PHPUnit_Framework_TestCase
 {

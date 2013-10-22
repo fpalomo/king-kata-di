@@ -1,7 +1,7 @@
 <?php
-require '../vendor/phpunit/phpunit/PHPUnit/Autoload.php';
+require_once '../vendor/phpunit/phpunit/PHPUnit/Autoload.php';
 
-include "../src/PaymentRouter.php";
+require_once "../src/PaymentRouter.php";
 
 Class PaymentRouterTest extends \PHPUnit_Framework_TestCase
 {

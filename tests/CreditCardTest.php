@@ -1,8 +1,8 @@
 <?php
 
-require '../vendor/phpunit/phpunit/PHPUnit/Autoload.php';
+require_once '../vendor/phpunit/phpunit/PHPUnit/Autoload.php';
 
-include "../src/CreditCard.php";
+require_once "../src/CreditCard.php";
 
 // These are weak tests. Explain Why!
 Class CreditCardTest extends \PHPUnit_Framework_TestCase

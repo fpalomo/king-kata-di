@@ -1,7 +1,7 @@
 <?php
 
 
-require '../vendor/phpunit/phpunit/PHPUnit/Autoload.php';
+require_once '../vendor/phpunit/phpunit/PHPUnit/Autoload.php';
 
 include "../src/Bootstrap.php";
 
