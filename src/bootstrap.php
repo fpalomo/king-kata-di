@@ -21,10 +21,13 @@ class Bootstrap
             // should throw exception in case of inexistent route
             $bankEntity = $paymentRouter->defineRouteFor($params["cc_type"]);
 
+            // create cc object
+            $ccData = new CreditCard($params);
+
             $engine = new PaymentEngine();
             $engine->setBankEntity($bankEntity);
             $engine->setRemoteApp($remoteApp);
-            $engine->setTransactionInfo($ccData);
+            $engine->setCC($ccData);
             $engine->setSecurityCheck($securityCheck);
 
         } catch (Exception $e) {
