@@ -15,10 +15,10 @@ Class PaymentRouter
         // for this exercise they are hardcoded
     }
 
-    public function defineDriverFor($cc_type)
+    public function defineRouteFor($cc_type)
     {
 
-        switch($cc_type){
+        switch ($cc_type) {
             case "MASTERCARD":
                 $driver = new BankEntityDriver_A();
                 break;
@@ -26,7 +26,7 @@ Class PaymentRouter
                 $driver = new BankEntityDriver_B();
                 break;
             case "VISA":
-                $driver =  new BankEntityDriver_C();
+                $driver = new BankEntityDriver_C();
                 break;
             default:
                 throw new exception("unknown cc_type");
