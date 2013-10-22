@@ -40,6 +40,22 @@ Our engine should accept HTTP Requests with the next POST parameters:
 * Transaction request security key ( 32 characters ) :
  The requests include a code to ensure they are real transaction requests.
 
+
+Our engine will response a simple XML with the next format:
+
+```
+<xml>
+<success></success>
+<transaction_id></transaction_id>
+<error_message></error_message>
+</xml>
+```
+
+Where
+success: [0-1]
+transaction_id: PSP Gateway internal transaction id for debugging purposes.
+error_message: optional, in case of success being 0, for debugging purposes.
+
 ---
 
 The Payment Security Engine ( PSE ) is different depending on the Application ID . Older applications use a less secure engine, v1,
@@ -59,13 +75,13 @@ The security key is a one way authentication algorithm ( md5 ) , using the next 
 
 PSE V3:
 The security key is a hybrid encryption algorithm ( GPG , http://en.wikipedia.org/wiki/GNU_Privacy_Guard ) . However,
-this version has still not been released . It is optional for those who finish quickly the exercise, to implement
+this version has still not been released . It is an improvement to add for those who finish the exercise earlier.
 this PSE version.
 
 
 ---
 
-In order to optimize bank fees, our engine will connect to a different payment backend depending on the credit card type:
+In order to optimize bank fees costs, our engine will connect to a different payment backend depending on the credit card type:
 
 * VISA : We use Entity A
 
@@ -74,7 +90,8 @@ In order to optimize bank fees, our engine will connect to a different payment b
 * AMEX : We use Entity C
 
 
-Entity A Expects a XML Request with the next format:
+
+Entity A expects a XML Request with the next format:
 ```
 <xml>
 <merchant_id></merchant_id>
@@ -86,5 +103,37 @@ Entity A Expects a XML Request with the next format:
 <cc_cvv></cc_cvv>
 <charge_amount></charge_amount>
 <charge_currency></charge_currency>
+<hash></hash>
 </xml>
 ```
+
+Where:
+hash: sha1 of the next concatenated values : merchant_id+merchant_transaction_id+cc_beholder+datetime (example 2013-10-30_12:59:59)
+
+
+Entity A responses :
+
+```
+<xml>
+<success></success>
+<entity_transaction_id></entity_transaction_id>
+<error_message></error_message>
+</xml>
+```
+
+success : [0-1]
+entity_transaction_id : 32 characters
+error_message: optional, only in case of success = 0
+
+
+--
+
+
+Entity B expects and responses exactly the same as Entity A, but with JSON format and using sha256.
+
+
+--
+
+Entity C expects a POST request with the next parameters:
+
+*
