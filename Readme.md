@@ -153,4 +153,14 @@ will use, so we will always send them the current date. the format is 2013-12-31
 * cc_expiry : year + month , 2 digits for each, and concatenated separated by a "-" . Example: 2017-12
 * cvv : matches to cc_cvv
 * eur_amount : amount to charge, in EUR , using comma separated decimals.
-* hash : md5 of the concatenation of : client_id + client_transaction +  cc_name + eur_amount 
+* hash : md5 of the concatenation of : client_id + client_transaction +  cc_name + eur_amount
+
+Entity C responses :
+
+```
+<xml>
+<response_code></response_code>
+</xml
+```
+Where
+- response_code : 0 in case of success . 1-255 in case of error, being this value the error code.
