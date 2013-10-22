@@ -5,6 +5,7 @@ require_once "PaymentEngine.php";
 require_once "PaymentRouter.php";
 require_once "CreditCard.php";
 require_once "SecurityCheck.php";
+require_once 'DB/Driver.php';
 
 class Bootstrap
 {
@@ -24,26 +25,38 @@ class Bootstrap
             // create cc object
             $ccData = new CreditCard($params);
 
-            // create security check object
+            // create security check object and charge the data
             $securityCheckRouter = new SecurityCheck_Router();
             $securityCheck = $securityCheckRouter->version($params["api_version"]);
+            $securityCheck->setParams($params);
+
+            // Create DB Driver object
+            $dbDriver = new DB_Driver();
 
             // create paymentEngine object
             $engine = new PaymentEngine();
+
+            $amount = $params["charge_amount"];
+            $currency = $params["charge_currency"];
+
 
             // inject dependencies
             $engine->setBankEntity($bankEntity);
             $engine->setRemoteApp($remoteApp);
             $engine->setCC($ccData);
             $engine->setSecurityCheck($securityCheck);
+            $engine->setDbHandler($dbDriver);
+            $engine->setAmount($amount);
+            $engine->setCurrency($currency);
             if (!empty($params["ipn_endpoint"])) {
                 $ipnEndpoint = new IpnEndpoint($params["ipn_endpoint"]);
                 $engine->setIpnEndpoint($ipnEndpoint);
             }
 
-            $result = $engine->processPayment();
+            $engine->processPayment();
 
-            return $result;
+            // we should create another object to format the output
+            return $engine->getXmlResponse();
 
         } catch (Exception $e) {
             echo $e->getMessage();
