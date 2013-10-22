@@ -3,8 +3,8 @@
 require_once "RemoteApp.php";
 require_once "PaymentEngine.php";
 require_once "PaymentRouter.php";
-
-
+require_once "CreditCard.php";
+require_once "SecurityCheck.php";
 
 class Bootstrap
 {
@@ -25,16 +25,30 @@ class Bootstrap
             $ccData = new CreditCard($params);
 
             // create security check object
-            $securityCheck = new SecurityCheck($params);
+            $securityCheckRouter = new SecurityCheck_Router();
+            $securityCheck = $securityCheckRouter->version($params["api_version"]);
 
+            // create paymentEngine object
             $engine = new PaymentEngine();
+
+            // inject dependencies
             $engine->setBankEntity($bankEntity);
             $engine->setRemoteApp($remoteApp);
             $engine->setCC($ccData);
             $engine->setSecurityCheck($securityCheck);
+            if (!empty($params["ipn_endpoint"])) {
+                $ipnEndpoint = new IpnEndpoint($params["ipn_endpoint"]);
+                $engine->setIpnEndpoint($ipnEndpoint);
+            }
+
+            $result = $engine->processPayment();
+
+            return $result;
 
         } catch (Exception $e) {
-            return "<xml><success>0</success><error_message>".$e->getMessage()."</error_message></xml>";
+            echo $e->getMessage();
+
+            return "<xml><success>0</success><error_message>" . $e->getMessage() . "</error_message></xml>";
         }
 
         return "<xml><success>1</success></xml>";
