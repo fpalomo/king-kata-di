@@ -39,12 +39,13 @@ Our engine should accept HTTP Requests with the next POST parameters:
 * charge_currency ( 3 digits ) :
  Optional parameter, ISO 4217 http://en.wikipedia.org/wiki/ISO_4217 , Default EUR
 
-* transaction_request_security_key ( 32 characters ) :
+* security_key ( 32 characters ) :
  The requests include a code to ensure they are real transaction requests.
 
 * ipn_endpoint : optional, URL where our system will notify of the payment success before printing the output. Explained
 below.
 
+* api_version ( integer ) : represents the api version used. [1-2]
 
 Our engine will response a simple XML with the next format:
 
