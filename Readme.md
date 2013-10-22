@@ -52,9 +52,9 @@ Our engine will response a simple XML with the next format:
 ```
 
 Where
-success: [0-1]
-transaction_id: PSP Gateway internal transaction id for debugging purposes.
-error_message: optional, in case of success being 0, for debugging purposes.
+- success: [0-1]
+- transaction_id: PSP Gateway internal transaction id for debugging purposes.
+- error_message: optional, in case of success being 0, for debugging purposes.
 
 ---
 
@@ -108,7 +108,7 @@ Entity A expects a XML Request with the next format:
 ```
 
 Where:
-hash: sha1 of the next concatenated values : merchant_id+merchant_transaction_id+cc_beholder+datetime (example 2013-10-30_12:59:59)
+- hash: sha1 of the next concatenated values : merchant_id+merchant_transaction_id+cc_beholder+datetime (example 2013-10-30_12:59:59)
 
 
 Entity A responses :
@@ -121,9 +121,10 @@ Entity A responses :
 </xml>
 ```
 
-success : [0-1]
-entity_transaction_id : 32 characters
-error_message: optional, only in case of success = 0
+Where
+- success : [0-1]
+- entity_transaction_id : 32 characters
+- error_message: optional, only in case of success = 0
 
 
 --
