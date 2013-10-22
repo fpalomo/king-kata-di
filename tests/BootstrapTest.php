@@ -3,9 +3,9 @@
 
 require '../vendor/phpunit/phpunit/PHPUnit/Autoload.php';
 
-include "../src/app.php";
+include "../src/Bootstrap.php";
 
-Class AppTest extends \PHPUnit_Framework_TestCase
+Class BootstrapTest extends \PHPUnit_Framework_TestCase
 {
     public function testValidRequest()
     {
@@ -25,9 +25,9 @@ Class AppTest extends \PHPUnit_Framework_TestCase
             "api_version"       => 1
         );
 
-        $app = new App($requestParams);
+        $bs = new Bootstrap($requestParams);
 
-        $response = $app->run();
+        $response = $bs->run();
 
         $xmlResponseObject = simplexml_load_string($response);
         $successElement = $xmlResponseObject->success;
