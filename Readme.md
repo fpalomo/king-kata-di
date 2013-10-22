@@ -83,13 +83,14 @@ this PSE version.
 
 In order to optimize bank fees costs, our engine will connect to a different payment backend depending on the credit card type:
 
-* VISA : We use Entity A
 
-* MASTERCARD : We use Entity B
+* MASTERCARD : We use Entity A
 
-* AMEX : We use Entity C
+* AMEX : We use Entity B
 
+* VISA : We use Entity C
 
+--
 
 Entity A expects a XML Request with the next format:
 ```
@@ -108,7 +109,10 @@ Entity A expects a XML Request with the next format:
 ```
 
 Where:
-- hash: sha1 of the next concatenated values : merchant_id+merchant_transaction_id+cc_beholder+datetime (example 2013-10-30_12:59:59)
+- merchant_id : our PSP id, they provided it to us when we created an account. the value is "MCHNT-304x3"
+- merchant_transaction_id : A unique key identifying the payment in our system. This is a value just for us, in case we need to trace back
+any payment.
+- hash : sha1 of the next concatenated values : merchant_id+merchant_transaction_id+cc_beholder+datetime (example 2013-10-30_12:59:59)
 
 
 Entity A responses :
@@ -137,4 +141,16 @@ Entity B expects and responses exactly the same as Entity A, but with JSON forma
 
 Entity C expects a POST request with the next parameters:
 
-*
+* client_id : is the same concept as merchant_id for Entity A and B . the value is "988123xAbC"
+* client_transaction: same concept as merchant_transaction_id in Entity A.
+* transaction_date: They want us to send them the date the transaction was created in our system. It is not a feature we
+will use, so we will always send them the current date. the format is 2013-12-31_12:59:59 .
+* cc_name : matches to cc_beholder
+* cc_code1 : matches to the first 4 digits block of cc_number
+* cc_code2 : matches to the second 4 digits block of cc_number
+* cc_code3 : matches to the third 4 digits block of the cc_number
+* cc_code4 : matches to the forth 4 digits block of the cc_number
+* cc_expiry : year + month , 2 digits for each, and concatenated separated by a "-" . Example: 2017-12
+* cvv : matches to cc_cvv
+* eur_amount : amount to charge, in EUR , using comma separated decimals.
+* hash : md5 of the concatenation of : client_id + client_transaction +  cc_name + eur_amount 
