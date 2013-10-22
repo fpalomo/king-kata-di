@@ -2,6 +2,8 @@
 
 include "RemoteApp.php";
 include "PaymentEngine.php";
+include "PaymentRouter.php";
+
 
 
 class Bootstrap
@@ -19,7 +21,11 @@ class Bootstrap
             // should throw exception in case of inexistent route
             $bankEntity = $paymentRouter->defineRouteFor($params["cc_type"]);
 
-
+            $engine = new PaymentEngine();
+            $engine->setBankEntity($bankEntity);
+            $engine->setRemoteApp($remoteApp);
+            $engine->setTransactionInfo($ccData);
+            $engine->setSecurityCheck($securityCheck);
 
         } catch (Exception $e) {
             return "<xml><success>0</success><error_message>".$e->getMessage()."</error_message></xml>";
