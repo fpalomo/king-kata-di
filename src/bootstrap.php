@@ -1,6 +1,7 @@
 <?php
 
 include "RemoteApp.php";
+include "PaymentEngine.php";
 
 
 class Bootstrap
@@ -11,6 +12,13 @@ class Bootstrap
         try {
             // constructor should throw exception in case of unknown id
             $remoteApp = new RemoteApp($params["application_id"]);
+
+
+            $paymentRouter = new PaymentRouter();
+
+            // should throw exception in case of inexistent route
+            $bankEntity = $paymentRouter->defineRouteFor($params["cc_type"]);
+
 
 
         } catch (Exception $e) {
