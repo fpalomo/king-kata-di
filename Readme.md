@@ -184,4 +184,4 @@ Where
 
 ---
 
-Find a system diagram here ![alt tag](https://raw.github.com/fpalomo/king-kata-di/blob/master/img/King%20Coding%20Dojo%20-%20Exercise%203%20-%20PSP%20Gateway.png)
+Find a system diagram here ![alt tag](https://raw.github.com/fpalomo/king-kata-di/master/img/King%20Coding%20Dojo%20-%20Exercise%203%20-%20PSP%20Gateway.png)
