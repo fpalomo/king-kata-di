@@ -1,6 +1,6 @@
 <?php
 
-class BankEntityDriver_C
+class BankEntityDriver_C extends BankEntityDriver_Abstract
 {
 
 }
