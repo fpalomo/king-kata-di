@@ -15,31 +15,31 @@ at the same time, have more users.
 
 Our engine should accept HTTP Requests with the next POST parameters:
 
-* Application ID ( 32 characters ) :
+* Application_ID ( 32 characters ) :
  Our system will accept payments from different apps, so we need to keep track of this.
 
-* Order ID ( 32 characters ) :
+* order_id ( 32 characters ) :
  App order ID , to be able to trace the payment back, and for the IPN ( read below ).
 
-* CC type ( 16 characters ) :
+* cc_type ( 16 characters ) :
  One of ( VISA | MASTERCARD | AMEX )
 
-* CC Beholder ( 64 characters )
+* cc_beholder ( 64 characters )
 
-* CC Number ( 16 digits )
+* cc_number ( 16 digits )
 
-* CC Expiry Month ( 2 digits )
+* cc_expiry_month ( 2 digits )
 
-* CC Expiry Year ( 2 digits )
+* cc_expiry_year ( 2 digits )
 
-* CC CVV ( 7 digits )
+* cc_cvv ( 7 digits )
 
-* Charge Amount ( 12 digits , dot separated decimals )
+* charge_amount ( 12 digits , dot separated decimals )
 
-* Charge Currency ( 3 digits ) :
+* charge_currency ( 3 digits ) :
  Optional parameter, ISO 4217 http://en.wikipedia.org/wiki/ISO_4217 , Default EUR
 
-* Transaction request security key ( 32 characters ) :
+* transaction_request_security_key ( 32 characters ) :
  The requests include a code to ensure they are real transaction requests.
 
 * ipn_endpoint : optional, URL where our system will notify of the payment success before printing the output. Explained
