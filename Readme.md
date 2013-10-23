@@ -64,7 +64,7 @@ Our engine will response a simple XML with the next format:
 ```
 
 Where
-- success: [0-1]
+- success: [0-1] , 1 if the credit card has been charged correctly, 0 in case of any error.
 - transaction_id: PSP Gateway internal transaction id for debugging purposes.
 - error_message: optional, in case of success being 0, for debugging purposes.
 
