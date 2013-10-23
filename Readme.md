@@ -1,6 +1,11 @@
 Welcome to another Coding Dojo Kata!
 In this exercise, you will be required to use the dependency injection concept in order to be able to write testable code.
 
+Preconditions
+=============
+
+It's highly encouraged that you open your own github account, and create a repository where you and your pair developer will be
+commiting your code. 
 
 Definition
 ==========
