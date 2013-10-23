@@ -7,6 +7,7 @@ Preconditions
 It's highly encouraged that you open your own github account, and create a repository where you and your pair developer will be
 commiting your code. 
 
+
 Definition
 ==========
 
@@ -48,7 +49,7 @@ Our engine should accept HTTP Requests with the next POST parameters:
  The requests include a code to ensure they are real transaction requests.
 
 * ipn_endpoint : optional, URL where our system will notify of the payment success before printing the output. Explained
-below.
+below. This feature can be considered an extended feature, and delivered in a second "release".
 
 * api_version ( integer ) : represents the api version used. [1-2]
 
