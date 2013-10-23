@@ -90,6 +90,9 @@ The security key is a hybrid encryption algorithm ( GPG , http://en.wikipedia.or
 this version has still not been released . It is an improvement to add for those who finish the exercise earlier.
 this PSE version.
 
+--
+
+Ipn , extended feature:
 
 In order to limit the systems that we need to audit to obtain our PCI Compliance certification ( http://www.pcicomplianceguide.org/ )
 We have designed a system that allows our apps to generate the orders, and have their users connecting directly to our servers.
