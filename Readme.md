@@ -70,7 +70,7 @@ Where
 
 ---
 
-The Payment Security Engine ( PSE ) is different depending on the Application ID . Older applications use a less secure engine, v1,
+The Payment Security Engine ( PSE ) is different depending on the Api_id . Older applications use a less secure engine, v1,
 newer apps use one of the newer algorithms, v2 or v3 .
 
 PSE v1:
