@@ -22,7 +22,7 @@ at the same time, have more users.
 Our engine should accept HTTP Requests with the next POST parameters:
 
 * application_id ( 32 alphanumeric characters ) :
- Our system will accept payments from different apps, so we need to keep track of this. Let's consider 1 => GAME_A , 2 => GAME_B
+ Our system will accept payments from different apps, so we need to keep track of this. Let's consider application_id = 1 means GAME_A , and application_id = 2 means GAME_B
 
 * order_id ( 32 alphanumeric characters ) :
  App order ID , to be able to trace the payment back, and for the IPN ( read below ).
