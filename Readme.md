@@ -21,24 +21,24 @@ at the same time, have more users.
 
 Our engine should accept HTTP Requests with the next POST parameters:
 
-* application_id ( 32 characters ) :
+* application_id ( 32 alphanumeric characters ) :
  Our system will accept payments from different apps, so we need to keep track of this.
 
-* order_id ( 32 characters ) :
+* order_id ( 32 alphanumeric characters ) :
  App order ID , to be able to trace the payment back, and for the IPN ( read below ).
 
-* cc_type ( 16 characters ) :
+* cc_type ( 16 alphanumeric characters ) :
  One of ( VISA | MASTERCARD | AMEX )
 
-* cc_beholder ( 64 characters )
+* cc_beholder ( 64 alphanumeric characters )
 
-* cc_number ( 16 digits )
+* cc_number ( 16 numeric characters )
 
-* cc_expiry_month ( 2 digits )
+* cc_expiry_month ( 2 numeric characters )
 
-* cc_expiry_year ( 2 digits )
+* cc_expiry_year ( 2 numeric characters )
 
-* cc_cvv ( 7 digits )
+* cc_cvv ( 7 numeric characters )
 
 * charge_amount ( 12 digits , dot separated decimals )
 
