@@ -44,33 +44,26 @@ with dynamic data types should not waste time checking the data types. The list 
 
 * charge_amount ( 12 digits , with 2 decimals ) . We suppose we only operate in EUR.
 
-* security_key ( 32 characters ) :
- The requests include a code to ensure they are real transaction requests.
 
 * ipn_endpoint : optional, URL where our system will notify of the payment success before printing the output. Explained
 below. This feature can be considered an extended feature, and delivered in a second "release".
 
 * api_version ( integer ) : represents the api version used. [1-2]
 
-Our engine will response a simple XML with the next format:
+* security_key ( 32 characters ) :
+ The requests to our system include a code to ensure they are real transaction requests. Our system should check 
+that the security key matches the algorithm ( see below ) according to the API version.
 
-```
-<xml>
-<success></success>
-<transaction_id></transaction_id>
-<error_message></error_message>
-</xml>
-```
 
-Where
+Our engine will response an array with the next information:
+
 - success: [0-1] , 1 if the credit card has been charged correctly, 0 in case of any error.
-- transaction_id: PSP Gateway internal transaction id for debugging purposes.
-- error_message: optional, in case of success being 0, for debugging purposes.
+- transaction_id: PSP Gateway internal transaction id for debugging purposes. This is the ID of this money movement in our system. 
+- error_message: if the transaction fails, it should contain any text message. If the transaction is successful, this should be empty.
 
 ---
 
-The Payment Security Engine ( PSE ) is different depending on the Api_id . Older applications use a less secure engine, v1,
-newer apps use one of the newer algorithms, v2 or v3 .
+The Payment Security Engine ( PSE ) is different depending on the Api_id . 
 
 PSE v1:
 The security key is just the first character of the next values concatenated in the this order:
@@ -82,29 +75,6 @@ PSE v2:
 The security key is a one way authentication algorithm ( md5 ) , using the next values concatenated in this order:
 
 * Application ID + Order ID + CC Type + CC Beholder + CC Number + CC Expiry Month + CC Expiry year + CC CVV + Charge Amount
-
-
-PSE V3:
-The security key is a hybrid encryption algorithm ( GPG , http://en.wikipedia.org/wiki/GNU_Privacy_Guard ) . However,
-this version has still not been released . It is an improvement to add for those who finish the exercise earlier.
-this PSE version.
-
---
-
-Ipn , extended feature:
-
-In order to limit the systems that we need to audit to obtain our PCI Compliance certification ( http://www.pcicomplianceguide.org/ )
-We have designed a system that allows our apps to generate the orders, and have their users connecting directly to our servers.
-In case the app uses it, we need to have an Instant Payment Notification ( IPN ) end point. If the request includes this ipn, we should
-connect to it and send the next parameters in a POST request:
-
-- order_id : The same coming in the request
-- transaction_id : PSP Gateway internal transaction id
-- success : [0-1]
-- error_message : In case of success 0
-
-If the request includes IPN endpoint, we should ensure we can connect to it before executing the payment.
-
 
 ---
 
@@ -193,6 +163,24 @@ Where
 - response_code : 0 in case of success . 1-255 in case of error, being this value the error code.
 
 
+
+--
+
+Ipn , extended feature ( just in case you finish quickly ) :
+
+In order to limit the systems that we need to audit to obtain our PCI Compliance certification ( http://www.pcicomplianceguide.org/ )
+We have designed a system that allows our apps to generate the orders, and have their users connecting directly to our servers.
+In case the app uses it, we need to have an Instant Payment Notification ( IPN ) end point. If the request includes this ipn, we should
+connect to it and send the next parameters in a POST request:
+
+- order_id : The same coming in the request
+- transaction_id : PSP Gateway internal transaction id
+- success : [0-1]
+- error_message : In case of success 0
+
+If the request includes IPN endpoint, we should ensure we can connect to it before executing the payment.
+
 ---
+
 
 Find a system diagram here ![alt tag](https://raw.github.com/fpalomo/king-kata-di/master/img/King%20Coding%20Dojo%20-%20Exercise%203%20-%20PSP%20Gateway.png)
