@@ -24,7 +24,8 @@ either, array, structs, direct parameters. The size and type is just for those w
 with dynamic data types should not waste time checking the data types. The list is:
 
 * application_id ( 32 alphanumeric characters ) :
- Our system will accept payments from different apps, so we need to keep track of this. Let's consider application_id = 1 means GAME_A , and application_id = 2 means GAME_B
+ Our system will accept payments from different apps, so we need to keep track of this. 
+Let's consider application_id = 1 means CANDY_CRUSH , and application_id = 2 means PAPA_PEAR
 
 * order_id ( 32 alphanumeric characters ) :
  App order ID , to be able to trace the payment back, and for the IPN ( read below ).
@@ -76,17 +77,12 @@ The security key is a one way authentication algorithm ( md5 ) , using the next 
 
 * Application ID + Order ID + CC Type + CC Beholder + CC Number + CC Expiry Month + CC Expiry year + CC CVV + Charge Amount
 
-
 ---
-
 
 In order to optimize bank fees costs, our engine will connect to a different payment backend depending on the credit card type:
 
-
 * MASTERCARD : We use Entity A
-
 * AMEX : We use Entity B
-
 * VISA : We use Entity C
 
 
@@ -133,7 +129,7 @@ to a different bank, and therefore the merchant_id is different. For Entity B :
 
 Entity C object expects a request with the next parameters:
 
-* client_id : is the same concept as merchant_id for Entity A and B . the value is "988123xAbC"
+* client_id : is the same concept as merchant_id in Entity A and B . the value is "988123xAbC"
 * client_transaction: same concept as merchant_transaction_id in Entity A.
 * transaction_date: They want us to send them the date the transaction was created in our system. It is not a feature we
 will use, so we will always send them the current date. the format is 2013-12-31_12:59:59 .
@@ -147,15 +143,8 @@ will use, so we will always send them the current date. the format is 2013-12-31
 * eur_amount : amount to charge, in EUR , using comma separated decimals.
 * hash : md5 of the concatenation of : client_id + client_transaction +  cc_name + eur_amount
 
-Entity C responses :
-
-```
-<xml>
-<response_code></response_code>
-</xml
-```
-Where
-- response_code : 0 in case of success . 1-255 in case of error, being this value the error code.
+Entity C responses an array with the next info:
+* response_code : 0 in case of success . 1-255 in case of error, being this value the error code. 
 
 
 
