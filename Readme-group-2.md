@@ -57,9 +57,9 @@ that the security key matches the algorithm ( see below ) according to the API v
 
 Our engine will response an array with the next information:
 
-- success: [0-1] , 1 if the credit card has been charged correctly, 0 in case of any error.
-- transaction_id: PSP Gateway internal transaction id for debugging purposes. This is the ID of this money movement in our system. 
-- error_message: if the transaction fails, it should contain any text message. If the transaction is successful, this should be empty.
+* success: [0-1] , 1 if the credit card has been charged correctly, 0 in case of any error.
+* transaction_id: PSP Gateway internal transaction id for debugging purposes. This is the ID of this money movement in our system. 
+* error_message: if the transaction fails, it should contain any text message. If the transaction is successful, this should be empty.
 
 ---
 
@@ -76,7 +76,9 @@ The security key is a one way authentication algorithm ( md5 ) , using the next 
 
 * Application ID + Order ID + CC Type + CC Beholder + CC Number + CC Expiry Month + CC Expiry year + CC CVV + Charge Amount
 
+
 ---
+
 
 In order to optimize bank fees costs, our engine will connect to a different payment backend depending on the credit card type:
 
@@ -87,56 +89,49 @@ In order to optimize bank fees costs, our engine will connect to a different pay
 
 * VISA : We use Entity C
 
+
+We will assume we have 3 different classes , each one of them for one of the bank entities. They are low level classes, used as
+a network abstraction object. We will consider they all have a method named "chargeCC" , that is the method we will
+use to send a money charge request to that bank entity. 
+
+
 --
 
-Entity A expects a XML Request with the next format:
-```
-<xml>
-<merchant_id></merchant_id>
-<merchant_transaction_id></merchant_transaction_id>
-<cc_beholder></cc_beholder>
-<cc_number></cc_number>
-<cc_expiry_month></cc_expiry_month>
-<cc_expiry_year></cc_expiry_year>
-<cc_cvv></cc_cvv>
-<charge_amount></charge_amount>
-<charge_currency></charge_currency>
-<hash></hash>
-</xml>
-```
+Our class for Entity A expects the next parameters:
 
-Where:
-- merchant_id : our PSP id, they provided it to us when we created an account. the value is "MCHNT-304x3"
-- merchant_transaction_id : A unique key identifying the payment in our system. This is a value just for us, in case we need to trace back
+* merchant_id : our PSP id, they provided it to us when we created an account. the value is "MCHNT-304x3"
+* merchant_transaction_id : A unique key identifying the payment in our system. This is a value just for us, in case we need to trace back
 any payment.
-- hash : sha1 of the next concatenated values : merchant_id+merchant_transaction_id+cc_beholder+datetime (example 2013-10-30_12:59:59)
+* cc_beholder
+* cc_expiry_month
+* cc_expiry_year ( with 4 digits ) 
+* cc_cvv
+* charge_amount
+* charge_currency
+* hash : sha1 of the next concatenated values : merchant_id+merchant_transaction_id+cc_beholder+datetime (example 2013-10-30_12:59:59)
 
 
-Entity A responses :
+This object method responses an array with the next data :
 
-```
-<xml>
-<success></success>
-<entity_transaction_id></entity_transaction_id>
-<error_message></error_message>
-</xml>
-```
 
 Where
-- success : [0-1]
-- entity_transaction_id : 32 characters
-- error_message: optional, only in case of success = 0
+* success : [0-1] , 0 for failed transactions, 1 when the money has been charged to the credit card.
+* bank_transaction_id : 32 characters . 
+* error_message: only in case of success = 0 , this one will have any value.
 
 
 --
 
 
-Entity B expects and responses exactly the same as Entity A, but with JSON format and using sha256.
+Entity B object expects and responses the same as Entity A, although obviously it sends the requests
+to a different bank, and therefore the merchant_id is different. For Entity B :
+
+* merchant_id = "0x8a-MCN" 
 
 
 --
 
-Entity C expects a POST request with the next parameters:
+Entity C object expects a request with the next parameters:
 
 * client_id : is the same concept as merchant_id for Entity A and B . the value is "988123xAbC"
 * client_transaction: same concept as merchant_transaction_id in Entity A.
