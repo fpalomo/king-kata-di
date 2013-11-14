@@ -116,7 +116,7 @@ So, for Entity B :
 
 --
 
-EntityC_Driver's method expects a request with the next parameters:
+EntityC_Driver's method expects a request with basically the same parameters, although with different names:
 
 * merc_id : our PSP id, they provided it to us when we created an account. the value is "MCHNT-304x3"
 * merc_trans_id : A unique key identifying the payment in our system. This is a value just for us, in case we need to trace back
