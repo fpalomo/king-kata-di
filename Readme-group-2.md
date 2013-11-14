@@ -21,7 +21,7 @@ at the same time, have more users.
 
 Let's develop a function, class-method or anything you prefer. It should accept requests with the next parameters, in the format you prefer
 either, array, structs, direct parameters. The size and type is just for those who have static data types, those who use programming languages 
-with dynamic data types should not waste time checking the data types. The list is:
+with dynamic data types please do not waste time checking the data types. The list is:
 
 * application_id ( 32 alphanumeric characters ) :
  Our system will accept payments from different apps, so we need to keep track of this. 
@@ -54,18 +54,19 @@ Our engine will response an array with the next information:
 
 ---
 
-The Payment Security Engine ( PSE ) is different depending on the Api_id . 
+The Payment Security Engine ( PSE ) is different depending on the Api_version . So, if the request is for api_version = 1 ,
+the PSEv1 will be used. If the request specifies api_version=2 , the PSEv2 will be used.
 
 PSE v1:
-The security key is just the first character of the next values concatenated in the this order:
+The security key is composed by the first character of the next values concatenated in the this order:
 
-* Application ID + Order ID + CC Type + CC Beholder + CC Number + CC Expiry Month + CC Expiry year + CC CVV + Charge Amount
+* Application ID + Order ID + CC Type + Charge Amount
 
 
 PSE v2:
 The security key is a one way authentication algorithm ( md5 ) , using the next values concatenated in this order:
 
-* Application ID + Order ID + CC Type + CC Beholder + CC Number + CC Expiry Month + CC Expiry year + CC CVV + Charge Amount
+* Application ID + Order ID + CC Type + Charge Amount
 
 ---
 
@@ -75,11 +76,10 @@ In order to optimize bank fees costs, our engine will connect to a different pay
 * AMEX : We use Entity B
 * VISA : We use Entity C
 
-
 We will assume we have 3 different classes ( "EntityA_Driver", "EntityB_Driver", "EntityC_Driver" ) each one of them for one of the bank entities. They are low level classes, used as
 a network abstraction object. We will consider they all have a method named "chargeCC" , that is the method we will
-use to send a money charge request to that bank entity. You don't actually need to implement this class, we will 
-
+use to send a money charge request to that bank entity. You don't actually need to implement this class, we will use mocks
+when we need to write the tests.
 
 --
 
@@ -144,4 +144,8 @@ Find a system diagram here ![alt tag](https://raw.github.com/fpalomo/king-kata-d
 The goal is to implement the main code block that will process the requests and will make a call to the necessary bank. Have in consideration that
 the code must be testable, and must match the SOLID Principles.
 http://en.wikipedia.org/wiki/SOLID_(object-oriented_design)
+
+I would suggest to start by writing a test for our code. Then, write the code, and continue writing the necesary tests for all that new code.
+
+
 
