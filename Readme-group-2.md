@@ -83,7 +83,7 @@ when we need to write the tests.
 
 --
 
-Our method "chargeCC" in the EntityA_Driver expects the next parameters:
+The method "chargeCC" in the EntityA_Driver expects the next parameters:
 
 * merchant_id : our PSP id, they provided it to us when we created an account. the value is "MCHNT-304x3"
 * merchant_transaction_id : A unique key identifying the payment in our system. This is a value just for us, in case we need to trace back
@@ -108,7 +108,8 @@ Where
 
 
 EntityB_Driver's chargeCC method expects and responses the same as Entity A, although obviously it sends the requests
-to a different bank, and therefore the merchant_id is different. For Entity B :
+to a different bank, and therefore the merchant_id is different. The return value is exactly the same as EntityA_Driver. 
+So, for Entity B :
 
 * merchant_id = "0x8a-MCN" 
 
@@ -117,17 +118,14 @@ to a different bank, and therefore the merchant_id is different. For Entity B :
 
 EntityC_Driver's method expects a request with the next parameters:
 
-* client_id : is the same concept as merchant_id in Entity A and B . the value is "988123xAbC"
-* client_transaction: same concept as merchant_transaction_id in Entity A.
-* transaction_date: They want us to send them the date the transaction was created in our system. It is not a feature we
-will use, so we will always send them the current date. the format is 2013-12-31_12:59:59 .
-* cc_name : matches to cc_beholder
-* cc_code1 : matches to the first 4 digits block of cc_number
-* cc_code2 : matches to the second 4 digits block of cc_number
-* cc_code3 : matches to the third 4 digits block of the cc_number
-* cc_code4 : matches to the forth 4 digits block of the cc_number
-* eur_amount : amount to charge, in EUR , using comma separated decimals.
-* hash : md5 of the concatenation of : client_id + client_transaction +  cc_name + eur_amount
+* merc_id : our PSP id, they provided it to us when we created an account. the value is "MCHNT-304x3"
+* merc_trans_id : A unique key identifying the payment in our system. This is a value just for us, in case we need to trace back
+any payment.
+* cc_name
+* cc_number
+* amount
+* currency
+* hash : sha1 of the next concatenated values : merchant_id+merchant_transaction_id+cc_beholder+datetime (example 2013-10-30_12:59:59)
 
 Entity C responses an array with the next info:
 * response_code : 0 in case of success . 1-255 in case of error, being this value the error code. 
