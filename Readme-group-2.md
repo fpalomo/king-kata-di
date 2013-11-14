@@ -141,4 +141,7 @@ Find a system diagram here ![alt tag](https://raw.github.com/fpalomo/king-kata-d
 
 ---
 
-The goal is to implement the main code block that will process the requests and will make a call to the necessary bank.
+The goal is to implement the main code block that will process the requests and will make a call to the necessary bank. Have in consideration that
+the code must be testable, and must match the SOLID Principles.
+http://en.wikipedia.org/wiki/SOLID_(object-oriented_design)
+
