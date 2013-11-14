@@ -46,9 +46,6 @@ Let's consider application_id = 1 means CANDY_CRUSH , and application_id = 2 mea
 * charge_amount ( 12 digits , with 2 decimals ) . We suppose we only operate in EUR.
 
 
-* ipn_endpoint : optional, URL where our system will notify of the payment success before printing the output. Explained
-below. This feature can be considered an extended feature, and delivered in a second "release".
-
 * api_version ( integer ) : represents the api version used. [1-2]
 
 * security_key ( 32 characters ) :
@@ -86,14 +83,14 @@ In order to optimize bank fees costs, our engine will connect to a different pay
 * VISA : We use Entity C
 
 
-We will assume we have 3 different classes , each one of them for one of the bank entities. They are low level classes, used as
+We will assume we have 3 different classes ( "EntityA_Driver", "EntityB_Driver", "EntityC_Driver" ) each one of them for one of the bank entities. They are low level classes, used as
 a network abstraction object. We will consider they all have a method named "chargeCC" , that is the method we will
-use to send a money charge request to that bank entity. 
+use to send a money charge request to that bank entity. You don't actually need to implement this class, we will 
 
 
 --
 
-Our class for Entity A expects the next parameters:
+Our method "chargeCC" in the EntityA_Driver expects the next parameters:
 
 * merchant_id : our PSP id, they provided it to us when we created an account. the value is "MCHNT-304x3"
 * merchant_transaction_id : A unique key identifying the payment in our system. This is a value just for us, in case we need to trace back
@@ -119,7 +116,7 @@ Where
 --
 
 
-Entity B object expects and responses the same as Entity A, although obviously it sends the requests
+EntityB_Driver's chargeCC method expects and responses the same as Entity A, although obviously it sends the requests
 to a different bank, and therefore the merchant_id is different. For Entity B :
 
 * merchant_id = "0x8a-MCN" 
@@ -127,7 +124,7 @@ to a different bank, and therefore the merchant_id is different. For Entity B :
 
 --
 
-Entity C object expects a request with the next parameters:
+EntityC_Driver's method expects a request with the next parameters:
 
 * client_id : is the same concept as merchant_id in Entity A and B . the value is "988123xAbC"
 * client_transaction: same concept as merchant_transaction_id in Entity A.
