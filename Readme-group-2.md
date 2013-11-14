@@ -37,14 +37,7 @@ Let's consider application_id = 1 means CANDY_CRUSH , and application_id = 2 mea
 
 * cc_number ( 16 numeric characters )
 
-* cc_expiry_month ( 2 numeric characters )
-
-* cc_expiry_year ( 2 numeric characters )
-
-* cc_cvv ( 7 numeric characters )
-
 * charge_amount ( 12 digits , with 2 decimals ) . We suppose we only operate in EUR.
-
 
 * api_version ( integer ) : represents the api version used. [1-2]
 
@@ -96,9 +89,7 @@ Our method "chargeCC" in the EntityA_Driver expects the next parameters:
 * merchant_transaction_id : A unique key identifying the payment in our system. This is a value just for us, in case we need to trace back
 any payment.
 * cc_beholder
-* cc_expiry_month
-* cc_expiry_year ( with 4 digits ) 
-* cc_cvv
+* cc_number
 * charge_amount
 * charge_currency
 * hash : sha1 of the next concatenated values : merchant_id+merchant_transaction_id+cc_beholder+datetime (example 2013-10-30_12:59:59)
@@ -135,8 +126,6 @@ will use, so we will always send them the current date. the format is 2013-12-31
 * cc_code2 : matches to the second 4 digits block of cc_number
 * cc_code3 : matches to the third 4 digits block of the cc_number
 * cc_code4 : matches to the forth 4 digits block of the cc_number
-* cc_expiry : year + month , 2 digits for each, and concatenated separated by a "-" . Example: 2017-12
-* cvv : matches to cc_cvv
 * eur_amount : amount to charge, in EUR , using comma separated decimals.
 * hash : md5 of the concatenation of : client_id + client_transaction +  cc_name + eur_amount
 
@@ -148,3 +137,8 @@ Entity C responses an array with the next info:
 
 
 Find a system diagram here ![alt tag](https://raw.github.com/fpalomo/king-kata-di/master/img/King%20Coding%20Dojo%20-%20Exercise%203.2%20-%20PSP%20Gateway.png)
+
+
+---
+
+The goal is to implement the main code block that will process the requests and will make a call to the necessary bank.
