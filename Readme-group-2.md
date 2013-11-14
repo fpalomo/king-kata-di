@@ -147,24 +147,7 @@ Entity C responses an array with the next info:
 * response_code : 0 in case of success . 1-255 in case of error, being this value the error code. 
 
 
-
---
-
-Ipn , extended feature ( just in case you finish quickly ) :
-
-In order to limit the systems that we need to audit to obtain our PCI Compliance certification ( http://www.pcicomplianceguide.org/ )
-We have designed a system that allows our apps to generate the orders, and have their users connecting directly to our servers.
-In case the app uses it, we need to have an Instant Payment Notification ( IPN ) end point. If the request includes this ipn, we should
-connect to it and send the next parameters in a POST request:
-
-- order_id : The same coming in the request
-- transaction_id : PSP Gateway internal transaction id
-- success : [0-1]
-- error_message : In case of success 0
-
-If the request includes IPN endpoint, we should ensure we can connect to it before executing the payment.
-
 ---
 
 
-Find a system diagram here ![alt tag](https://raw.github.com/fpalomo/king-kata-di/master/img/King%20Coding%20Dojo%20-%20Exercise%203%20-%20PSP%20Gateway.png)
+Find a system diagram here ![alt tag](https://raw.github.com/fpalomo/king-kata-di/master/img/King%20Coding%20Dojo%20-%20Exercise%203.2%20-%20PSP%20Gateway.png)
