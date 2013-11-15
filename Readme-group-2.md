@@ -28,7 +28,7 @@ with dynamic data types please do not waste time checking the data types. The li
 Let's consider application_id = 1 means CANDY_CRUSH , and application_id = 2 means PAPA_PEAR
 
 * order_id ( 32 alphanumeric characters ) :
- App order ID , to be able to trace the payment back, and for the IPN ( read below ).
+ App order ID , to be able to trace the payment back.
 
 * cc_type ( 16 alphanumeric characters ) :
  One of ( VISA | MASTERCARD | AMEX )
